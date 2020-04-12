@@ -1,0 +1,48 @@
+
+案例：
+银行转账的例子更需要考虑事务的问题。
+
+创建测试表
+   create table account( 
+      id int primary key, 
+      name varchar(50) not null default ' ', 
+      balance decimal(10, 2) not null default 0.0 );
+
+开始一个事务
+     start transaction;
+
+创建一个保存点
+    savepoint 保存点名；
+
+回到保存点（根据具体情况）
+    rollback to 保存点名;
+
+代码演示
+mysql> start transaction; --开启事务
+ Query OK, 0 rows affected (0.00 sec)
+ mysql> savepoint aa; --设置保存点aa 
+Query OK, 0 rows affected (0.00 sec)
+ mysql> insert into account values(1, '张三', 10); --添加一条记录
+ Query OK, 1 row affected (0.00 sec)
+ mysql> savepoint bb; -- 设置保存点bb 
+Query OK, 0 rows affected (0.00 sec)
+mysql> insert into account values(2, '李四', 10000); --再添加一条记录 
+Query OK, 1 row affected (0.00 sec) 
+mysql> select * from account; --两条记录都在了
++----+--------+----------+
+ | id | name | balance    | 
++----+--------+----------+
+ | 1  | 张三   | 10.00       | 
+ | 2  | 李四   | 10000.00 | 
++----+--------+----------+
+ 2 rows in set (0.00 sec)
+ mysql> rollback to bb; -- 发现后来添加这一条记录是误操作。所以回滚到bb状态
+ Query OK, 0 rows affected (0.01 sec)
+ mysql> select * from account; -- 第二条记录没有了
++----+--------+---------+
+ | id | name | balance | 
++----+--------+---------+
+ | 1 | 张三    | 10.00     | 
++----+--------+---------+
+ 1 row in set (0.03 sec)
+
