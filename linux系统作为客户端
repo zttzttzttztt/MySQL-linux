@@ -1,0 +1,39 @@
+
+
+import java.io. *;import java.net. *;
+
+public class MyClient (
+
+public static void main(String[] args) (
+
+try
+
+11達接ip和port
+
+Socket s = new Socket ("192.168.220.254", 8888) ;
+
+/ /通过文件流写入发送消息
+
+OutputStreamWriter osw = new OutputSt reamWriter (s. getOutputStream() ) ;BufferedWriter bw = new BufferedWriter (osw) ;
+
+PrintWriter pw = new PrintWriter (bw, true) ;
+
+//发送
+
+pw.println("hello , world") ;
+
+//读取从服务器回送的信息
+
+InputStreamReader isr = new InputStreamReader (s. get InputStream() ) ;Buf feredReader br = new BufferedReader (isr) ;
+
+String response = br. readLine () ;
+
+System. out. println("Server response is : : :" + response) ;
+
+catch(Exception e)1
+
+e. printStackTrace() ;
+
+)
+
+)
