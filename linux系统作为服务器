@@ -1,0 +1,43 @@
+
+
+import java.io.*;import java.net.*;
+
+public class MyServerTest {
+
+public static void main (String [ ] args) {
+
+try {
+
+//创建ServerSocket
+
+ServerSocket ss = new ServerSocket (8888) ;
+
+System. out.println("I am Listening") ;
+
+//监听，直到某个客户端来连接自己，-旦连接成功，就会得到Socket
+
+//就好像是在客 户端和服务器端之间建立了一个数据管道，可以进行数据传输
+
+Socket s = ss.accept () ;
+
+/ /可以读取从客户端发送的信息
+
+InputStreamReader isr = new InputStreamReader (s .getInputStream()) ;Buf feredReader br = new Buf feredReader (isr) ;
+
+String message = br. readline() ;
+
+System. out.println("client sent: : :”+ message) ;
+
+//从服务端，回-个消息
+
+OutputStreamWriter OSW = new OutputStreamWriter (s. getOutputStream() ) ;Printwriter pw = new Printwriter (osw, true) ;
+
+pw.println("I get your message :" + message) ;
+
+} catch ( IOException e) {
+
+TODO Auto-generated catch block
+
+e. printStackTrace () ;
+
+}
