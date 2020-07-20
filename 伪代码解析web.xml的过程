@@ -1,0 +1,27 @@
+
+
+class Tomcat {
+	// 根据 servlet-name 找到合适的 Servelt 对象，这个 map 可以在合适的位置填充
+	private Map<String, Servlet> namedInstanceMap;
+	// 根据 URL 找到合适的 servlet-name
+	// 实际上，因为是利用正则做的，所以不一定是 map
+	private Map<String, String> urlMapping;
+	private void parseWebXML() {
+		// 在 WEB-INF 文件夹下找到 web.xml 文件，根据 xml 上的版本，选择合适的格式去解析
+		// 主要目的有以下几个：
+		// 1. 每一个 servlet 标签，就代表着一个 Servlet 子类
+			// 标签中明确给出的 servlet-name 用来查找定位该类的 key
+			// 标签中明确给出的 servlet-class 用来定位类字节码文件在硬盘的位置
+			// 最终的类字节码文件在 WEB-INF/classes + <servlet-class> 标签中的路径
+		// 2. 每一个 servlet-mapping 标签，代表着如何通过用户请求的 URL，决定是交给哪个
+			// Servlet 对象去处理
+			// 定位流程是这样的
+			// 如果 URL 可以匹配 servlet-mapping 中的 url-pattern 子标签（这里用的是正则）
+			// 则，使用 servlet-name 为 key 的 Servlet 对象去处理这个请求
+			// 再根据 servlet-name 去创建好的对象 map 中，找到 Servlet 对象即可
+		
+			// 如果没有找到合适 Servlet 类能匹配这次 URL，则返回 tomcat 中的 404 页面
+	}
+}
+
+
