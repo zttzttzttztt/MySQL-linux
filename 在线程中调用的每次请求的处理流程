@@ -1,0 +1,26 @@
+
+
+public  class Tomcat {
+	void doHttpRequest(Socket socket) {
+	// 参照我们之前学习的 HTTP 服务器类似的原理，进行 HTTP 协议的请求解析，和响应构建
+	HttpServletRequest req = HttpServletRequest.parse(socket);
+	HttpServletRequest resp = HttpServletRequest.build(socket);
+	// 判断 URL 对应的文件是否可以直接在我们的根路径上找到对应的文件，如果找到，就是静态内容
+	// 直接使用我们学习过的 IO 进行内容输出
+	if (file.exists()) {
+		// 返回静态内容
+		return;
+	} /
+	/ 走到这里的逻辑都是动态内容了
+	// 根据我们在配置中说的，按照 URL -> servlet-name -> Servlet 对象的链条
+	// 最终找到要处理本次请求的 Servlet 对象
+	Servlet ins = findInstance(req.getURL());
+	// 调用 Servlet 对象的 service 方法
+	// 这里就会最终调用到我们自己写的 HttpServlet 的子类里的方法了
+	try {
+		ins.service(req, resp);
+	} catch (Exception e) {
+	// 返回 500 页面，表示服务器内部错误
+     }
+   }
+}
