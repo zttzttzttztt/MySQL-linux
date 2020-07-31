@@ -1,0 +1,48 @@
+
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        int n=in.nextInt();
+        int max=0;
+        for(int i=2;i<=n;i++){
+            LinkedList<int[]> a =new LinkedList<int[]>();
+            a=fenduan(n,i);  //分段
+
+            for(int j=0;j<a.size();j++) {
+                int mul=1;
+                    int[] b = a.get(j);
+                    for (int k = 0; k < b.length; k++) {
+                        mul = mul *b[k];
+                    }
+
+                if (mul > max) {
+                    max = mul;
+                }
+            }
+        }
+        System.out.println(max);
+
+    }
+//不太会分段，以分三段为例
+    private static LinkedList<int[]> fenduan(int n, int m) {
+        LinkedList<int[]> v =new LinkedList<int[]>();
+        for(int i=1;i<n-2;i++){
+            for(int j=1;j<n-i;j++){
+                int[] a=new int[3];
+                int k=n-j-i;
+                if(k>=1){
+                    a[0]=i;
+                    a[1]=j;
+                    a[2]=k;
+                    v.add(a);
+                }else{
+                    break;
+                }
+            }
+        }
+        return v;
+    }
+}
